@@ -5,10 +5,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="vendor.js" defer></script>
     <script src="app.js" defer></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&family=Rubik:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <title>Tic-Tac-Toe game</title>
 </head>
 <body>
-    <h1>Tic Tac Toe</h1>
+    <div id="home" class="page">
+        <div class="title">Choose Mode</div>
+        <div class="buttons">
+            <button id="palyer-vs-player" >P v P</button>
+            <button id="palyer-vs-computer">P v AI</button>
+        </div>
+        <div class="details">
+            <span>P v P: player vs player</span>
+            <span>P v AI: player vs computer</span>
+        </div>
+    </div>
+
+    <div id="difficulty-mode" class="page"></div>
+    <div id="play-as" class="page"></div>
+
+    <div id="board" class="page">
+        <div class="title">Player X turn</div>
+        <div class="board">
+            <div class="board-cell">1X</div>
+            <div class="board-cell">2X</div>
+            <div class="board-cell">3X</div>
+            <div class="board-cell">X</div>
+            <div class="board-cell">X</div>
+            <div class="board-cell">X</div>
+            <div class="board-cell">X</div>
+            <div class="board-cell">X</div>
+            <div class="board-cell">X</div>
+        </div>
+    </div>
 </body>
 </html>
