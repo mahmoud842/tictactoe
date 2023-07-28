@@ -9,7 +9,7 @@ const playerVsPlayerBtn = document.getElementById('palyer-vs-player');
 const playerVsComputerBtn = document.getElementById('palyer-vs-computer');
 
 // board page title
-boardTitle = document.getElementById('board-title').innerText;
+boardTitle = document.getElementById('board-title');
 
 // board
 const board = [];
@@ -75,10 +75,10 @@ function gameSetup() {
     // change to board page
     // add click event listener to the cells
     // intialize and display empty board
-    boardQuery();
     homePage.style.display = 'none';
     playAsPage.style.display = 'none';
     boardPage.style.display = 'flex';
+    boardQuery();
     intialState(board);
     addEvenetListenerToCells();
     display();
@@ -87,10 +87,12 @@ function gameSetup() {
 
 function AITurn() {
     boardTitle.innerText = 'Computer Thinking...';
-    checkEndGame();
     let action = minimax(board);
     play(action);
     display();
+    if (!checkEndGame()) {
+        boardTitle.innerText = `Player ${player(board)} turn`;
+    }
 }
 
 function checkEndGame() {
@@ -110,6 +112,7 @@ function checkEndGame() {
 }
 
 function play(action) {
+    console.log(action[0], action[1]);
     board[action[0]][action[1]] = player(board);
 }
 

@@ -52,24 +52,21 @@ function winner(board) {
 
     // check columns
     for (let i = 0; i < 3; i++) {
-        if (board[0][i] == board[1][0] && board[1][0] == board[2][0] && board[0][i] != EMPTY) {
+        if (board[0][i] == board[1][i] && board[1][i] == board[2][i] && board[0][i] != EMPTY) {
             return board[0][i];
         }
     }
 
     // check main diagonal
-    for (let i = 0; i < 3; i++) {
-        if (board[0][0] == board[1][1] && board[1][1] == board[2][2] && board[0][0] != EMPTY) {
-            return board[0][0];
-        }
+    if (board[0][0] == board[1][1] && board[1][1] == board[2][2] && board[0][0] != EMPTY) {
+        return board[0][0];
     }
 
     // check sec diagonal
-    for (let i = 0; i < 3; i++) {
-        if (board[2][0] == board[1][1] && board[1][1] == [0][2] && board[1][1] != EMPTY) {
-            return board[1][1];
-        }
+    if (board[2][0] == board[1][1] && board[1][1] == [0][2] && board[1][1] != EMPTY) {
+        return board[1][1];
     }
+
 
     return null;
 }
@@ -97,14 +94,89 @@ function actions(board) {
 
 function result(board, action) {
     let newBoard = structuredClone(board);
+    // console.log(action[0], action[1]);
     newBoard[action[0]][action[1]] = player(board);
     return newBoard;
 }
 
-function utility() {
-    console.log('utililty not implemented');
+// this function is only called when terminal returns true
+function utility(board) {
+    let winner_ = winner(board);
+    if (winner_ == X) {
+        return 1;
+    }
+    else if (winner_ == O) {
+        return -1;
+    }
+    return 0;
+}
+
+// Math.max(), Math.min()
+
+function maxValue(board) {
+    let v = -100;
+    if (terminal(board)) {
+        return utility(board);
+    }
+
+    for (const action of actions(board)) {
+        v = Math.max(v, minValue(result(board, action)));
+    }
+
+    return v;
+}
+
+function minValue(board) {
+    let v = 100;
+    if (terminal(board)) {
+        return utility(board);
+    }
+
+    for (const action of actions(board)) {
+        v = Math.min(v, maxValue(result(board, action)));
+    }
+
+    return v;
 }
 
 function minimax() {
-    console.log('minimax not implemented');
+    if (terminal(board)) {
+        return null;
+    }
+
+    let playerTurn = player(board);
+    let actionsScoresList = [];
+    let value = 0;
+
+    if (playerTurn == X) {
+        for (const action of actions(board)) {
+            value = minValue(result(board, action));
+            actionsScoresList.push([value, action]);
+        }
+
+        let max = [-10, [-1, -1]];
+        for (const tmp of actionsScoresList) {
+            // console.log('in minimax tmp[0]=', tmp[0], ' max[0]=', max[0]);
+            if (tmp[0] > max[0]) {
+                max = tmp;
+            }
+        }
+
+        return max[1];
+    }
+    else {
+        for (const action of actions(board)) {
+            value = maxValue(result(board, action));
+            actionsScoresList.push([value, action]);
+        }
+
+        let min = [10, [-1, -1]];
+        for (const tmp of actionsScoresList) {
+            if (tmp[0] < min[0]) {
+                min = tmp;
+            }
+        }
+
+        return min[1];
+    }
 }
