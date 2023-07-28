@@ -89,7 +89,7 @@ function actions(board) {
         for (let j = 0; j < 3; j++) {
             if (board[i][j] == EMPTY) {
                 availableActions.push([i, j]);
-            } z
+            }
         }
     }
     return availableActions;
