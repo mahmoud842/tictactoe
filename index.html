@@ -33,10 +33,19 @@
         </div>
         <div class="details">
             <p id="bug-note">
-                Note: after clicking on any of the above buttons please wait for at most 3 seconds the cause of this that after you click there are 2 main things that should happen 1-to change the DOM and display the grid and the title should be computer thinking... 2-In case you choose to play with O that means that the AI will play first therfore the minimax algorithm will start calculating the best move.
+                Note: In case you clicked on 'Play as O' please wait for at most 3 seconds.
+            </p>
+            <p id="bug-note">
+                the cause of this that after you click there are 2 main things that should happen. 
+                <br>
+                1-to change the DOM and display the grid and the title should be computer thinking... 
+                <br>
+                2-since you choose O therfore AI will play first and the minimax algorithm will start calculating the best move.
             </p>
             <p id="bug-note">
                 the problem is that the browser will re-render the DOM (apply 1) only after 2 is done and 2 may take the 3 seconds (time is machine depended).
+                <br>
+                also you will notice that the 'computer thinking...' message will never appear this is alse cased by the same reason that the browser doesn't re-render at specific times when the message should appear.
             </p>
         </div>
     </div>
