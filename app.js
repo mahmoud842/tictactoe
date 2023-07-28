@@ -83,12 +83,22 @@ function terminal(board) {
     }
 }
 
-function actions() {
-    console.log('action not implemented');
+function actions(board) {
+    let availableActions = [];
+    for (let i = 0; i < 3; i++) {
+        for (let j = 0; j < 3; j++) {
+            if (board[i][j] == EMPTY) {
+                availableActions.push([i, j]);
+            } z
+        }
+    }
+    return availableActions;
 }
 
-function result() {
-    console.log('result not implemented');
+function result(board, action) {
+    let newBoard = structuredClone(board);
+    newBoard[action[0]][action[1]] = player(board);
+    return newBoard;
 }
 
 function utility() {
