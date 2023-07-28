@@ -8,6 +8,9 @@ const boardPage = document.getElementById('board');
 const playerVsPlayerBtn = document.getElementById('palyer-vs-player');
 const playerVsComputerBtn = document.getElementById('palyer-vs-computer');
 
+// board page title
+boardTitle = document.getElementById('board-title').innerText;
+
 // board
 const board = [];
 const boardObjs = [];
@@ -83,6 +86,7 @@ function gameSetup() {
 }
 
 function AITurn() {
+    boardTitle.innerText = 'Computer Thinking...';
     checkEndGame();
     let action = minimax(board);
     play(action);
@@ -94,10 +98,10 @@ function checkEndGame() {
     if (terminal(board)) {
         winChar = winner(board);
         if (winChar != null) {
-            document.getElementById('board-title').innerText = `player ${winChar} won`;
+            boardTitle.innerText = `Player ${winChar} won`;
         }
         else {
-            document.getElementById('board-title').innerText = `Tie`;
+            boardTitle.innerText = `Tie`;
         }
         gameOptions.waitingForUserInput = false;
         return true;
@@ -115,6 +119,7 @@ function cellsEvent(action) {
         console.log(`user action (${action[0]} , ${action[1]}) approved`);
         play(action);
         display();
+        boardTitle.innerText = `Player ${player(board)} turn`;
         if (!checkEndGame() && gameOptions.AI == true) {
             AITurn();
         }
