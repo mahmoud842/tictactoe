@@ -1,10 +1,10 @@
 // pages
 const homePage = document.getElementById('home');
-const difficultyModePage = document.getElementById('difficulry-mode');
+const difficultyModePage = document.getElementById('difficulry-mode'); // not functional
 const playAsPage = document.getElementById('play-as');
 const boardPage = document.getElementById('board');
 
-// buttons
+// home page buttons
 const playerVsPlayerBtn = document.getElementById('palyer-vs-player');
 const playerVsComputerBtn = document.getElementById('palyer-vs-computer');
 
@@ -15,9 +15,6 @@ const boardObjs = [];
 // options
 const gameOptions = {
     AI: false,
-    AIChar: null,
-    AITurn: false,
-    playerCharacter: 'X',
     waitingForUserInput: false
 };
 
@@ -49,7 +46,24 @@ function display() {
 }
 
 function AISetup() {
-    console.log('AI');
+    homePage.style.display = 'none';
+    playAsPage.style.display = 'flex';
+
+    // get playAs page buttons
+    playAsX = document.getElementById('playAsX');
+    playAsO = document.getElementById('playAsO');
+
+    function playAsButtonsAction(char) {
+        gameSetup();
+        gameOptions.AI = true;
+        if (char == O) { // if the player choose O then the AI will start
+            gameOptions.AITurn = true;
+            AITurn();
+        }
+    }
+
+    playAsX.addEventListener('click', playAsButtonsAction.bind(this, X));
+    playAsO.addEventListener('click', playAsButtonsAction.bind(this, O));
 }
 
 function gameSetup() {
@@ -60,21 +74,50 @@ function gameSetup() {
     // intialize and display empty board
     boardQuery();
     homePage.style.display = 'none';
+    playAsPage.style.display = 'none';
     boardPage.style.display = 'flex';
     intialState(board);
     addEvenetListenerToCells();
     display();
+    gameOptions.waitingForUserInput = true;
 }
 
-function gameLoop() {
-    console.log('reached game loop');
+function AITurn() {
+    checkEndGame();
+    let action = minimax(board);
+    play(action);
+    display();
+}
+
+function checkEndGame() {
+    console.log('inside checkendgame');
+    if (terminal(board)) {
+        winChar = winner(board);
+        if (winChar != null) {
+            document.getElementById('board-title').innerText = `player ${winChar} won`;
+        }
+        else {
+            document.getElementById('board-title').innerText = `Tie`;
+        }
+        gameOptions.waitingForUserInput = false;
+        return true;
+    }
+    return false;
+}
+
+function play(action) {
+    board[action[0]][action[1]] = player(board);
 }
 
 // click handler for each cell in the board
 function cellsEvent(action) {
-    if (gameOptions.waitingForUserInput) {
-        console.log(action);
-        gameLoop();
+    if (actionValidate(board, action) && gameOptions.waitingForUserInput == true) {
+        console.log(`user action (${action[0]} , ${action[1]}) approved`);
+        play(action);
+        display();
+        if (!checkEndGame() && gameOptions.AI == true) {
+            AITurn();
+        }
     }
     else {
         console.log(`user action (${action[0]} , ${action[1]}) but ignored`);
