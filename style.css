@@ -45,6 +45,7 @@ button {
 }
 
 .details {
+    width: 400px;
     font-weight: 400;
     display: flex;
     flex-direction: column;
@@ -67,4 +68,8 @@ button {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+#bug-note {
+    font-size: 12px;
 }

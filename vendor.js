@@ -11,6 +11,9 @@ const playerVsComputerBtn = document.getElementById('palyer-vs-computer');
 // board page title
 boardTitle = document.getElementById('board-title');
 
+// board page reset button
+resetButton = document.getElementById('reset');
+
 // board
 const board = [];
 const boardObjs = [];
@@ -60,7 +63,7 @@ function AISetup() {
         gameSetup();
         gameOptions.AI = true;
         if (char == O) { // if the player choose O then the AI will start
-            gameOptions.AITurn = true;
+            gameOptions.AIStarted = true;
             AITurn();
         }
     }
@@ -78,9 +81,10 @@ function gameSetup() {
     homePage.style.display = 'none';
     playAsPage.style.display = 'none';
     boardPage.style.display = 'flex';
+    resetButton.style.display = 'none';
     boardQuery();
     intialState(board);
-    addEvenetListenerToCells();
+    addEventListenerToCells();
     display();
     gameOptions.waitingForUserInput = true;
 }
@@ -106,6 +110,7 @@ function checkEndGame() {
             boardTitle.innerText = `Tie`;
         }
         gameOptions.waitingForUserInput = false;
+        resetButton.style.display = 'block';
         return true;
     }
     return false;
@@ -137,10 +142,22 @@ playerVsPlayerBtn.addEventListener('click', gameSetup);
 playerVsComputerBtn.addEventListener('click', AISetup);
 
 // a funtion to add event listener to each cell in the board
-function addEvenetListenerToCells() {
+function addEventListenerToCells() {
     for (let i = 0; i < 3; i++) {
         for (let j = 0; j < 3; j++) {
             boardObjs[i][j].addEventListener('click', cellsEvent.bind(this, [i, j]));
         }
     }
 }
+
+// event listener to 'play again' button
+reset.addEventListener('click', () => {
+    intialState(board);
+    display();
+    gameOptions.waitingForUserInput = true;
+    boardTitle.innerText = `Player ${player(board)} turn`;
+    reset.style.display = 'none';
+    if (gameOptions.AIStarted == true) {
+        AITurn();
+    }
+});

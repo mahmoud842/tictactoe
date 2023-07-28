@@ -31,6 +31,14 @@
             <button id="playAsX" >play as X</button>
             <button id="playAsO">play as O</button>
         </div>
+        <div class="details">
+            <p id="bug-note">
+                Note: after clicking on any of the above buttons please wait for at most 3 seconds the cause of this that after you click there are 2 main things that should happen 1-to change the DOM and display the grid and the title should be computer thinking... 2-In case you choose to play with O that means that the AI will play first therfore the minimax algorithm will start calculating the best move.
+            </p>
+            <p id="bug-note">
+                the problem is that the browser will re-render the DOM (apply 1) only after 2 is done and 2 may take the 3 seconds (time is machine depended).
+            </p>
+        </div>
     </div>
 
     <div id="board" class="page">
@@ -45,6 +53,9 @@
             <div class="board-cell">X</div>
             <div class="board-cell">X</div>
             <div class="board-cell">X</div>
+        </div>
+        <div class="buttons">
+            <button id="reset" style="width: 200px;">Play again</button>
         </div>
     </div>
 </body>

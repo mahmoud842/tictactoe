@@ -3,6 +3,9 @@ const X = 'X';
 const O = 'O';
 
 function intialState(board) {
+    while (board.length) {
+        board.pop();
+    }
     board.push([EMPTY, EMPTY, EMPTY]);
     board.push([EMPTY, EMPTY, EMPTY]);
     board.push([EMPTY, EMPTY, EMPTY]);
